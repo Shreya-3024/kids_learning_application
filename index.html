@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Learning Hub | Fun & Educational</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body data-theme="light">
+    <!-- Floating Background Elements -->
+    <div class="floating-elements" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; overflow: hidden;">
+        <div class="float-item" style="position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, var(--primary-purple) 0%, transparent 70%); opacity: 0.1; top: -150px; left: -150px; border-radius: 50%; animation: float 10s infinite alternate;"></div>
+        <div class="float-item" style="position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, var(--primary-skyblue) 0%, transparent 70%); opacity: 0.1; bottom: -200px; right: -200px; border-radius: 50%; animation: float 15s infinite alternate-reverse;"></div>
+        <div class="float-item" style="position: absolute; width: 200px; height: 200px; background: radial-gradient(circle, var(--primary-pink) 0%, transparent 70%); opacity: 0.1; top: 20%; right: 10%; border-radius: 50%; animation: float 12s infinite alternate;"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">KidsLearningHub</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="quiz.html">Quizzes</a></li>
+            <li><a href="simple_story.html">Stories</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle">
+            <i class="fas fa-moon"></i>
+            <span>Theme</span>
+        </button>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content" style="z-index: 1;">
+            <h1>Unleash Your Imagination</h1>
+            <p>The ultimate playground for curious minds!</p>
+            <div style="display: flex; gap: 1.5rem; justify-content: center;">
+                <a href="quiz.html" class="cta-button">Start Playing</a>
+                <a href="simple_story.html" class="cta-button" style="background: var(--primary-purple); box-shadow: 0 10px 30px rgba(155, 89, 182, 0.4);">Read Stories</a>
+            </div>
+        </div>
+        
+        <!-- Animated Hero Mascot -->
+        <div class="hero-mascot" style="position: absolute; bottom: 50px; right: 10%; font-size: 8rem; animation: float 4s infinite ease-in-out;">🚀</div>
+        <div class="hero-mascot" style="position: absolute; top: 150px; left: 5%; font-size: 5rem; animation: float 6s infinite ease-in-out-reverse;">🎨</div>
+    </header>
+
+    <main class="main-content">
+        <h2 class="section-title">Everything You Need to Learn</h2>
+        <div class="card-grid">
+            <div class="card">
+                <i class="fas fa-brain" style="color: var(--primary-purple);"></i>
+                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; font-weight: 800;">Smart Quizzes</h3>
+                <p style="color: var(--text-color); opacity: 0.8; margin-bottom: 2rem;">Challenge yourself with exciting questions in Math, Science, and English!</p>
+                <a href="quiz.html" class="cta-button" style="padding: 0.8rem 2rem; font-size: 1.1rem; width: 100%; display: block;">Play Quiz</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-magic" style="color: var(--primary-pink);"></i>
+                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; font-weight: 800;">Story World</h3>
+                <p style="color: var(--text-color); opacity: 0.8; margin-bottom: 2rem;">Dive into magical adventures and learn through interactive storytelling.</p>
+                <a href="simple_story.html" class="cta-button" style="padding: 0.8rem 2rem; font-size: 1.1rem; width: 100%; display: block; background: var(--primary-pink); box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);">Open Stories</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-paint-brush" style="color: var(--primary-skyblue);"></i>
+                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; font-weight: 800;">Creative Canvas</h3>
+                <p style="color: var(--text-color); opacity: 0.8; margin-bottom: 2rem;">Draw your dreams on our professional digital canvas with fun tools!</p>
+                <a href="quiz.html#drawing" class="cta-button" style="padding: 0.8rem 2rem; font-size: 1.1rem; width: 100%; display: block; background: var(--primary-skyblue); box-shadow: 0 10px 30px rgba(52, 152, 219, 0.4);">Start Drawing</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div style="margin-bottom: 2rem;">
+            <a href="index.html" class="nav-logo">KidsLearningHub</a>
+        </div>
+        <p style="opacity: 0.7;">&copy; 2026 Kids Learning Hub. Made with ❤️ for future leaders.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

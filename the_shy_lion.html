@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leo the Shy Lion's Adventure | Kids Learning Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .story-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--container-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .active {
+            display: block;
+        }
+        .food-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .food-btn {
+            font-size: 2rem;
+            padding: 1rem;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-purple);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .food-btn:hover {
+            transform: scale(1.1) rotate(-10deg);
+            background: var(--primary-pink);
+        }
+        .lion {
+            font-size: 4rem;
+            margin: 2rem;
+            transition: all 0.5s;
+        }
+        .story-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin: 1.5rem auto;
+            color: var(--text-color);
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Floating Background Elements -->
+    <div class="floating-elements" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; overflow: hidden;">
+        <div class="float-item" style="position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, var(--primary-purple) 0%, transparent 70%); opacity: 0.05; top: -100px; left: -100px; border-radius: 50%; animation: float 10s infinite alternate;"></div>
+        <div class="float-item" style="position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, var(--primary-skyblue) 0%, transparent 70%); opacity: 0.05; bottom: -150px; right: -150px; border-radius: 50%; animation: float 15s infinite alternate-reverse;"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">KidsLearningHub</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="quiz.html">Quizzes</a></li>
+            <li><a href="simple_story.html">Stories</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle">
+            <i class="fas fa-moon"></i>
+            <span>Theme</span>
+        </button>
+    </nav>
+
+    <main class="main-content" style="margin-top: 100px;">
+        <div class="story-container glass" style="padding: 4rem; animation: fadeInUp 0.8s ease-out;">
+            <!-- Page 1 -->
+            <div id="page1" class="page active">
+                <h1 class="section-title">🦁 Leo's Roaring Journey</h1>
+                <div class="story-text" style="font-size: 1.4rem; margin-bottom: 3rem;">
+                    <p>Leo was a young lion with a heart of gold, but he had a secret...</p>
+                    <p style="font-style: italic; color: var(--primary-purple);">"I'm too shy to roar!"</p>
+                </div>
+                <div class="lion" style="font-size: 8rem; animation: float 3s infinite ease-in-out;">🦁</div>
+                <button class="cta-button" onclick="nextPage()" style="margin-top: 2rem;">Help Leo Roar →</button>
+            </div>
+
+            <!-- Page 2 -->
+            <div id="page2" class="page">
+                <div class="story-text">
+                    <p>One day, Leo's tummy rumbled loudly. He needed to hunt but was too shy to approach other animals.</p>
+                    <p>What should Leo eat for lunch?</p>
+                </div>
+                <div class="food-options">
+                    <button class="food-btn" onclick="chooseFood('🥕')">🥕</button>
+                    <button class="food-btn" onclick="chooseFood('🍖')">🍖</button>
+                    <button class="food-btn" onclick="chooseFood('🍓')">🍓</button>
+                    <button class="food-btn" onclick="chooseFood('🐟')">🐟</button>
+                </div>
+                <div id="food-result" style="min-height: 50px; margin-bottom: 1rem;"></div>
+                <div class="nav-buttons">
+                    <button class="cta-button" style="background: var(--primary-purple);" onclick="prevPage()">← Back</button>
+                    <button id="next-btn-2" class="cta-button" onclick="nextPage()" disabled>Next →</button>
+                </div>
+            </div>
+
+            <!-- Page 3 -->
+            <div id="page3" class="page">
+                <div class="story-text">
+                    <p>After eating, Leo met a lost baby zebra 🦓 who was crying for its mother.</p>
+                    <p>Should Leo help the zebra find its family?</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                    <button class="cta-button" style="width: 100%; max-width: 400px; background: var(--primary-green);" onclick="chooseHelp(true)">Yes, help!</button>
+                    <button class="cta-button" style="width: 100%; max-width: 400px; background: #95a5a6;" onclick="chooseHelp(false)">No, too shy</button>
+                </div>
+                <div id="help-result" style="min-height: 80px; margin: 20px 0;"></div>
+                <div class="nav-buttons">
+                    <button class="cta-button" style="background: var(--primary-purple);" onclick="prevPage()">← Back</button>
+                    <button id="next-btn-3" class="cta-button" onclick="nextPage()" disabled>Next →</button>
+                </div>
+            </div>
+
+            <!-- Page 4 -->
+            <div id="page4" class="page">
+                <div class="story-text">
+                    <p id="ending-text"></p>
+                    <div id="celebration" style="font-size: 40px; margin: 1rem 0;"></div>
+                </div>
+                <div class="nav-buttons" style="flex-wrap: wrap;">
+                    <button class="cta-button" style="background: var(--primary-purple);" onclick="prevPage()">← Back</button>
+                    <button class="cta-button" style="background: var(--primary-green);" onclick="restartStory()">Read Again ♻️</button>
+                    <button class="cta-button" onclick="window.location.href='quiz.html'">Go Home</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Kids Learning Hub. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <script>
+        let currentPage = 1;
+        let storyState = {
+            foodChoice: null,
+            helpedZebra: false
+        };
+
+        function nextPage() {
+            document.getElementById(`page${currentPage}`).classList.remove('active');
+            currentPage++;
+            document.getElementById(`page${currentPage}`).classList.add('active');
+            updatePageContent();
+        }
+
+        function prevPage() {
+            document.getElementById(`page${currentPage}`).classList.remove('active');
+            currentPage--;
+            document.getElementById(`page${currentPage}`).classList.add('active');
+        }
+
+        function chooseFood(food) {
+            storyState.foodChoice = food;
+            const resultDiv = document.getElementById('food-result');
+            const responses = {
+                '🥕': "Carrots? Lions are carnivores! Leo's tummy still rumbles.",
+                '🍖': "Juicy meat! Perfect for a growing lion. Leo feels stronger!",
+                '🍓': "Sweet berries! Not very filling, but tasty.",
+                '🐟': "Fish from the river! A light but healthy meal."
+            };
+            resultDiv.innerHTML = `<p>${responses[food]}</p>`;
+            document.getElementById('next-btn-2').disabled = false;
+        }
+
+        function chooseHelp(helped) {
+            storyState.helpedZebra = helped;
+            const resultDiv = document.getElementById('help-result');
+            if (helped) {
+                resultDiv.innerHTML = `<p>Leo bravely roared (his best roar yet!) to call the zebra's family. 
+                The mother zebra came running and was so grateful!</p>`;
+            } else {
+                resultDiv.innerHTML = `<p>Leo hid in the grass. Later, he saw the zebra family reunited and wished he had helped.</p>`;
+            }
+            document.getElementById('next-btn-3').disabled = false;
+        }
+
+        function updatePageContent() {
+            if (currentPage === 4) {
+                const endingText = document.getElementById('ending-text');
+                const celebration = document.getElementById('celebration');
+                
+                if (storyState.helpedZebra) {
+                    endingText.innerHTML = `After helping the zebra, all the animals cheered for Leo!<br><br>
+                    "That was the bravest thing we've seen!" they said.<br><br>
+                    Leo learned that even shy lions can do brave things when they care about others.`;
+                    celebration.textContent = '🎉🦁🌟';
+                } else {
+                    endingText.innerHTML = `The next day, Leo practiced roaring near a quiet pond.<br><br>
+                    Little by little, his roar grew stronger!<br><br>
+                    He learned that bravery grows with practice, just like his roar.`;
+                    celebration.textContent = '🦁💪';
+                }
+            }
+        }
+
+        function restartStory() {
+            currentPage = 1;
+            storyState = { foodChoice: null, helpedZebra: false };
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById('page1').classList.add('active');
+            document.getElementById('food-result').innerHTML = '';
+            document.getElementById('help-result').innerHTML = '';
+            document.getElementById('next-btn-2').disabled = true;
+            document.getElementById('next-btn-3').disabled = true;
+        }
+    </script>
+</body>
+</html>

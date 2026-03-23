@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hungry Bear's Adventure | Kids Learning Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .story-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--container-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .active {
+            display: block;
+        }
+        .food-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .food-btn {
+            font-size: 2rem;
+            padding: 1rem;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-pink);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .food-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            background: var(--primary-purple);
+        }
+        .bear {
+            font-size: 4rem;
+            margin: 2rem;
+            transition: all 0.5s;
+        }
+        .story-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin: 1.5rem auto;
+            color: var(--text-color);
+        }
+        .counter {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-purple);
+            margin: 1rem;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Floating Background Elements -->
+    <div class="floating-elements" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; overflow: hidden;">
+        <div class="float-item" style="position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, var(--primary-purple) 0%, transparent 70%); opacity: 0.05; top: -100px; left: -100px; border-radius: 50%; animation: float 10s infinite alternate;"></div>
+        <div class="float-item" style="position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, var(--primary-skyblue) 0%, transparent 70%); opacity: 0.05; bottom: -150px; right: -150px; border-radius: 50%; animation: float 15s infinite alternate-reverse;"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">KidsLearningHub</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="quiz.html">Quizzes</a></li>
+            <li><a href="simple_story.html">Stories</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle">
+            <i class="fas fa-moon"></i>
+            <span>Theme</span>
+        </button>
+    </nav>
+
+    <main class="main-content" style="margin-top: 100px;">
+        <div class="story-container glass" style="padding: 4rem; animation: fadeInUp 0.8s ease-out;">
+            <!-- Page 1 -->
+            <div id="page1" class="page active">
+                <h1 class="section-title">🐻 Benny's Forest Quest</h1>
+                <div class="story-text" style="font-size: 1.4rem; margin-bottom: 3rem;">
+                    <p>After a long winter nap, Benny the bear woke up with a <strong>GIANT</strong> rumbling tummy!</p>
+                    <p style="font-style: italic; color: var(--primary-purple);">"GRRRROOOOWWWLLL! Time for breakfast!"</p>
+                </div>
+                <div class="bear" style="font-size: 8rem; animation: float 3s infinite ease-in-out;">🐻</div>
+                <button class="cta-button" onclick="nextPage()" style="margin-top: 2rem;">Start Adventure →</button>
+            </div>
+
+            <!-- Page 2 -->
+            <div id="page2" class="page">
+                <div class="story-text">
+                    <p>Benny found these foods in the forest. What should he eat first?</p>
+                    <p class="counter">Food collected: <span id="food-count">0</span>/3</p>
+                </div>
+                <div class="food-options">
+                    <div class="food-btn" onclick="collectFood('🍎', 'crunchy apples')">🍎</div>
+                    <div class="food-btn" onclick="collectFood('🍯', 'sticky honey')">🍯</div>
+                    <div class="food-btn" onclick="collectFood('🐟', 'fresh fish')">🐟</div>
+                    <div class="food-btn" onclick="collectFood('🍄', 'mystery mushrooms')">🍄</div>
+                </div>
+                <div id="food-feedback" style="min-height: 50px; margin: 20px;"></div>
+                <div class="nav-buttons">
+                    <button class="cta-button" style="background: var(--primary-purple);" onclick="prevPage()">← Back</button>
+                    <button id="next-btn-2" class="cta-button" onclick="nextPage()" disabled>Next →</button>
+                </div>
+            </div>
+
+            <!-- Page 3 -->
+            <div id="page3" class="page">
+                <div class="story-text">
+                    <p>Now Benny needs to decide where to find more food:</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                    <button class="cta-button" style="width: 100%; max-width: 400px; background: #3498db;" onclick="choosePath('river')">🐟 Go to the river to fish</button>
+                    <button class="cta-button" style="width: 100%; max-width: 400px; background: #f39c12;" onclick="choosePath('tree')">🐝 Climb a honey tree</button>
+                    <button class="cta-button" style="width: 100%; max-width: 400px; background: #9b59b6;" onclick="choosePath('berry')">🫐 Hunt for berries</button>
+                </div>
+                <div id="path-result" style="min-height: 80px; margin: 20px 0;"></div>
+                <div class="nav-buttons">
+                    <button class="cta-button" style="background: var(--primary-purple);" onclick="prevPage()">← Back</button>
+                    <button id="next-btn-3" class="cta-button" onclick="nextPage()" disabled>Next →</button>
+                </div>
+            </div>
+
+            <!-- Page 4 -->
+            <div id="page4" class="page">
+                <div class="story-text">
+                    <p id="ending-text"></p>
+                    <div id="celebration" style="font-size: 40px; margin: 1rem 0;"></div>
+                    <div id="fun-fact" style="background: var(--bg-color); padding: 1.5rem; border-radius: 15px; border-left: 5px solid var(--primary-green); margin: 2rem 0;"></div>
+                </div>
+                <div class="nav-buttons" style="flex-wrap: wrap;">
+                    <button class="cta-button" style="background: var(--primary-purple);" onclick="prevPage()">← Back</button>
+                    <button class="cta-button" style="background: var(--primary-green);" onclick="restartStory()">Read Again ♻️</button>
+                    <button class="cta-button" onclick="window.location.href='quiz.html'">Go Home</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Kids Learning Hub. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <script>
+        let currentPage = 1;
+        let storyState = {
+            foods: [],
+            pathChoice: null,
+            foodCount: 0
+        };
+
+        function nextPage() {
+            document.getElementById(`page${currentPage}`).classList.remove('active');
+            currentPage++;
+            document.getElementById(`page${currentPage}`).classList.add('active');
+            updatePageContent();
+        }
+
+        function prevPage() {
+            document.getElementById(`page${currentPage}`).classList.remove('active');
+            currentPage--;
+            document.getElementById(`page${currentPage}`).classList.add('active');
+        }
+
+        function collectFood(emoji, name) {
+            if (!storyState.foods.includes(name)) {
+                storyState.foods.push(name);
+                storyState.foodCount++;
+                document.getElementById('food-count').textContent = storyState.foodCount;
+                
+                const bear = document.querySelector('.bear');
+                bear.textContent = '🐻➡️' + emoji;
+                bear.classList.add('shake');
+                setTimeout(() => bear.classList.remove('shake'), 500);
+                
+                const feedback = document.getElementById('food-feedback');
+                feedback.innerHTML = `<p>Yum! Benny ate ${name} ${emoji}</p>`;
+                
+                if (storyState.foodCount >= 3) {
+                    document.getElementById('next-btn-2').disabled = false;
+                }
+            }
+        }
+
+        function choosePath(path) {
+            storyState.pathChoice = path;
+            const resultDiv = document.getElementById('path-result');
+            const responses = {
+                'river': "Benny caught 3 big fish! 🐟🐟🐟 Bears are great fishers!",
+                'tree': "Oh no! The bees chased Benny away! 🐝 But he found some fallen honeycomb.",
+                'berry': "Benny found a berry bush and ate until his fur turned purple! 🫐"
+            };
+            resultDiv.innerHTML = `<p>${responses[path]}</p>`;
+            document.getElementById('next-btn-3').disabled = false;
+        }
+
+        function updatePageContent() {
+            if (currentPage === 4) {
+                const endingText = document.getElementById('ending-text');
+                const celebration = document.getElementById('celebration');
+                const funFact = document.getElementById('fun-fact');
+                
+                endingText.innerHTML = `After his big meal, Benny's tummy was full and happy!<br><br>
+                He ate: ${storyState.foods.join(', ')} and found more food at the ${storyState.pathChoice}.<br><br>
+                Now he's ready for a nap!`;
+                
+                celebration.textContent = '🐻💤😴';
+                
+                // Educational fun fact
+                const facts = [
+                    "Did you know? Bears can smell food from miles away!",
+                    "Fun fact: Bears eat both plants and meat (they're omnivores).",
+                    "Bear fact: They can run as fast as a horse!",
+                    "Did you know? Bear cubs stay with their mom for 2-3 years."
+                ];
+                funFact.textContent = facts[Math.floor(Math.random() * facts.length)];
+            }
+        }
+
+        function restartStory() {
+            currentPage = 1;
+            storyState = { foods: [], pathChoice: null, foodCount: 0 };
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById('page1').classList.add('active');
+            document.getElementById('food-feedback').innerHTML = '';
+            document.getElementById('path-result').innerHTML = '';
+            document.getElementById('food-count').textContent = '0';
+            document.getElementById('next-btn-2').disabled = true;
+            document.getElementById('next-btn-3').disabled = true;
+            document.querySelector('.bear').textContent = '🐻...';
+        }
+    </script>
+</body>
+</html>

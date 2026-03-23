@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizzes & Games | Kids Learning Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body data-theme="light">
+    <!-- Floating Background Elements -->
+    <div class="floating-elements" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; overflow: hidden;">
+        <div class="float-item" style="position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, var(--primary-purple) 0%, transparent 70%); opacity: 0.05; top: -100px; left: -100px; border-radius: 50%; animation: float 10s infinite alternate;"></div>
+        <div class="float-item" style="position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, var(--primary-skyblue) 0%, transparent 70%); opacity: 0.05; bottom: -150px; right: -150px; border-radius: 50%; animation: float 15s infinite alternate-reverse;"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">KidsLearningHub</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="quiz.html">Quizzes</a></li>
+            <li><a href="simple_story.html">Stories</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle">
+            <i class="fas fa-moon"></i>
+            <span>Theme</span>
+        </button>
+    </nav>
+
+    <main class="main-content" style="margin-top: 100px;">
+        <div class="container">
+            <!-- Home Screen -->
+            <div id="home-screen">
+                <h1 class="section-title">🎓 Educational Hub</h1>
+                <p class="subtitle" style="text-align: center; margin-bottom: 3rem; font-size: 1.4rem; opacity: 0.8;">Choose an activity to start your learning journey!</p>
+                
+                <div class="subject-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+                    <button class="subject-btn english" onclick="startQuiz('english')" style="background: linear-gradient(135deg, var(--primary-purple), #7c3aed);">
+                        <i class="fas fa-book" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
+                        <span>English</span>
+                    </button>
+                    <button class="subject-btn hindi" onclick="startQuiz('hindi')" style="background: linear-gradient(135deg, var(--primary-pink), #db2777);">
+                        <i class="fas fa-language" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
+                        <span>हिंदी</span>
+                    </button>
+                    <button class="subject-btn math" onclick="startQuiz('math')" style="background: linear-gradient(135deg, var(--primary-green), #059669);">
+                        <i class="fas fa-calculator" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
+                        <span>Math</span>
+                    </button>
+                    <button class="subject-btn gk" onclick="startQuiz('gk')" style="background: linear-gradient(135deg, var(--primary-skyblue), #2563eb);">
+                        <i class="fas fa-globe-americas" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
+                        <span>General Knowledge</span>
+                    </button>
+                    <button class="subject-btn games" onclick="showGameSelection()" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <i class="fas fa-gamepad" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
+                        <span>Fun Games</span>
+                    </button>
+                    <button class="subject-btn drawing" onclick="showDrawingScreen()" style="background: linear-gradient(135deg, var(--primary-skyblue), #2563eb);">
+                        <i class="fas fa-paint-brush" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
+                        <span>Magic Canvas</span>
+                    </button>
+                    <button id="story-mode-btn" class="subject-btn" onclick="showStorySelection()" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                        <i class="fas fa-book-reader" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
+                        <span>Read Story</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Drawing Screen -->
+            <div id="drawing-screen" class="hidden">
+                <div class="drawing-container glass" style="margin-top: 3rem; padding: 3rem; animation: fadeInUp 0.8s ease-out;">
+                    <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2.5rem; font-weight: 800; background: var(--header-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🎨 Magic Canvas</h2>
+                    
+                    <div class="prompt-area" style="background: var(--bg-color); border-radius: 20px; padding: 2rem; margin-bottom: 2rem; border: 1px solid var(--border-color);">
+                        <div class="prompt-text" id="currentPrompt" style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary-purple);">What's on your mind?</div>
+                        <div style="display: flex; gap: 1rem;">
+                            <input type="text" id="promptInput" placeholder="Type a drawing idea..." style="flex: 1; padding: 1rem 1.5rem; border-radius: 50px; border: 2px solid var(--border-color); background: var(--container-bg); color: var(--text-color); font-size: 1rem;">
+                            <button class="cta-button" id="setPromptBtn" style="padding: 0.8rem 1.5rem; font-size: 1rem;">Set Idea</button>
+                            <button class="cta-button" id="randomPromptBtn" style="padding: 0.8rem 1.5rem; font-size: 1rem; background: var(--primary-purple);">Random</button>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 3fr; gap: 2rem;">
+                        <div class="drawing-controls" style="display: flex; flex-direction: column; gap: 1.5rem; background: var(--bg-color); padding: 2rem; border-radius: 20px; border: 1px solid var(--border-color);">
+                            <div class="color-picker" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                                <div class="color-option selected" style="background-color: #000000; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.1);" data-color="#000000"></div>
+                                <div class="color-option" style="background-color: #ff4757; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.1);" data-color="#ff4757"></div>
+                                <div class="color-option" style="background-color: #2ed573; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.1);" data-color="#2ed573"></div>
+                                <div class="color-option" style="background-color: #1e90ff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.1);" data-color="#1e90ff"></div>
+                                <div class="color-option" style="background-color: #ffa502; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.1);" data-color="#ffa502"></div>
+                                <div class="color-option" style="background-color: #ff6b81; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.1);" data-color="#ff6b81"></div>
+                            </div>
+                            
+                            <div class="brush-size" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <span style="font-weight: 700; font-size: 0.9rem; opacity: 0.7;">Brush Size</span>
+                                <input type="range" id="brushSize" min="1" max="50" value="5" style="width: 100%; cursor: pointer;">
+                            </div>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                                <button class="cta-button" id="clearBtn" style="background: #ff4757; width: 100%; padding: 0.8rem; font-size: 1rem;">Clear</button>
+                                <button class="cta-button" id="saveBtn" style="background: #2ed573; width: 100%; padding: 0.8rem; font-size: 1rem;">Save</button>
+                            </div>
+
+                            <div class="shape-buttons" style="display: grid; grid-template-columns: 1fr; gap: 0.8rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                                <button class="cta-button" id="drawTriangle" style="background: var(--primary-purple); padding: 0.8rem; font-size: 0.9rem;">Triangle</button>
+                                <button class="cta-button" id="drawSquare" style="background: var(--primary-skyblue); padding: 0.8rem; font-size: 0.9rem;">Square</button>
+                                <button class="cta-button" id="drawCircle" style="background: var(--primary-pink); padding: 0.8rem; font-size: 0.9rem;">Circle</button>
+                            </div>
+                        </div>
+                        
+                        <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.05); border: 2px solid var(--border-color); position: relative;">
+                            <canvas id="drawingArea" width="600" height="500" style="cursor: crosshair; display: block; width: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <div style="margin-top: 3rem; text-align: center;">
+                        <button class="cta-button" onclick="goHome()" style="background: var(--primary-purple);">Back to Home</button>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="quiz-container">
+            <div class="quiz-header">
+                <h2 id="quiz-title">Quiz Title</h2>
+                <div>
+                    <span id="question-counter">1/10</span> | 
+                    <span id="score-counter">Score: 0</span>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+
+            <div id="question" class="question">
+                Question will appear here
+            </div>
+
+            <div id="options" class="options">
+                <!-- Options will be populated by JavaScript -->
+            </div>
+
+            <div class="quiz-buttons">
+                <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" disabled>
+                    Next Question
+                </button>
+                <button class="btn btn-secondary" onclick="goHome()">
+                    Back to Home
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="hidden">
+            <div class="score-display">
+                <div class="emoji" id="result-emoji">🎉</div>
+                <h2 id="final-score">Your Score: 0/10</h2>
+                <p id="result-message">Great job!</p>
+                <div style="margin-top: 2rem;">
+                    <button class="btn btn-primary" onclick="goHome()">
+                        Play Again
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Selection Screen -->
+        <div id="game-selection" class="hidden">
+            <h2 class="section-title">🎮 Choose a Game</h2>
+            <div class="game-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+                <button class="game-btn" onclick="startGame('memory')" style="background: linear-gradient(135deg, var(--primary-purple), #7c3aed); border: none; border-radius: 20px; padding: 2rem; color: white; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                    <i class="fas fa-brain" style="font-size: 2.5rem;"></i>
+                    <span>Memory Match</span>
+                </button>
+                <button class="game-btn" onclick="startGame('sorting')" style="background: linear-gradient(135deg, var(--primary-pink), #db2777); border: none; border-radius: 20px; padding: 2rem; color: white; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                    <i class="fas fa-sort-numeric-down" style="font-size: 2.5rem;"></i>
+                    <span>Number Sorting</span>
+                </button>
+                <button class="game-btn" onclick="startGame('bubble')" style="background: linear-gradient(135deg, var(--primary-green), #059669); border: none; border-radius: 20px; padding: 2rem; color: white; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                    <i class="fas fa-soap" style="font-size: 2.5rem;"></i>
+                    <span>Bubble Pop Math</span>
+                </button>
+                <button class="game-btn" onclick="startGame('scramble')" style="background: linear-gradient(135deg, var(--primary-skyblue), #2563eb); border: none; border-radius: 20px; padding: 2rem; color: white; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                    <i class="fas fa-font" style="font-size: 2.5rem;"></i>
+                    <span>Word Scramble</span>
+                </button>
+            </div>
+            <div style="margin-top: 3rem; text-align: center;">
+                <button class="cta-button" onclick="goHome()" style="background: var(--primary-purple);">Back to Home</button>
+            </div>
+        </div>
+
+        <div id="story-selection" class="hidden">
+            <h2 class="section-title">📖 Choose a Story</h2>
+            <div class="story-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <button class="story-btn" onclick="loadStory('the_shy_lion.html')" style="background: linear-gradient(135deg, #f59e0b, #d97706); border: none; border-radius: 24px; padding: 2.5rem; color: white; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 1rem; box-shadow: var(--shadow-soft);">
+                    <i class="fas fa-paw" style="font-size: 3rem;"></i>
+                    <span style="font-size: 1.5rem; font-weight: 800;">The Shy Lion</span>
+                </button>
+                <button class="story-btn" onclick="loadStory('simple_story.html')" style="background: linear-gradient(135deg, #10b981, #059669); border: none; border-radius: 24px; padding: 2.5rem; color: white; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 1rem; box-shadow: var(--shadow-soft);">
+                    <i class="fas fa-tree" style="font-size: 3rem;"></i>
+                    <span style="font-size: 1.5rem; font-weight: 800;">Bear Adventure</span>
+                </button>
+            </div>
+            <div style="margin-top: 3rem; text-align: center;">
+                <button class="cta-button" onclick="goHome()" style="background: var(--primary-purple);">Back to Home</button>
+            </div>
+        </div>
+        <!-- Game Containers (will be shown one at a time) -->
+        <div id="memory-game-container" class="game-container hidden"></div>
+        <div id="sorting-game-container" class="game-container hidden"></div>
+        <div id="bubble-game-container" class="game-container hidden"></div>
+        <div id="scramble-game-container" class="game-container hidden"></div>
+    </div>
+
+  
+<script>
+    // Navigation functions
+    function showStorySelection() {
+        document.getElementById('home-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.add('hidden');
+        document.getElementById('story-selection').classList.remove('hidden');
+    }
+
+    function loadStory(storyFile) {
+        window.location.href = storyFile;
+    }
+
+    </script>
+</div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Kids Learning Hub. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+
+    </script>
+</body>
+</html>
